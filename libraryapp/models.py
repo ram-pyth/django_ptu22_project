@@ -8,7 +8,7 @@ class Author(models.Model):
     first_name = models.CharField('Vardas', max_length=100)
     last_name = models.CharField('Pavardė', max_length=100)
 
-    class Meta:  # globalūs nuostatai lentelei
+    class Meta:  # globalūs nuostatai lentelei(ordering - rikiavimas)
         ordering = ('last_name', 'first_name')
 
     def __str__(self):
@@ -21,6 +21,10 @@ class Genre(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = 'Žanras'  # skilties pavadinimas vienaskaita
+        verbose_name_plural = 'Žanrai'  # skilties pavadinimas daugiskaita
 
 
 class Book(models.Model):
