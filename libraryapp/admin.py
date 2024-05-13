@@ -2,13 +2,22 @@ from django.contrib import admin
 from .models import Author, Book, Genre, BookInstance
 
 
+class BookInstanceInline(admin.TabularInline):
+    model = BookInstance
+    extra = 0  # automatiškai kuriamų papildomų eilučių skaičius
+
+
 class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'isbn', 'author', 'display_genre')
+    search_fields = ('title', 'author__last_name')  # <FK>__<tėvinės laukas>
+    inlines = (BookInstanceInline,)
 
 
 class BookInstanceAdmin(admin.ModelAdmin):
     list_display = ('book', 'id', 'status', 'due_back')
     list_filter = ('status', 'due_back')
+    search_fields = ('id', 'book__title')
+    list_editable = ('status', 'due_back')
 
     fieldsets = (
         ('Knyga', {'fields': ['book']}),
