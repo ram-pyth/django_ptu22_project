@@ -30,10 +30,14 @@ class Book(models.Model):
     summary = models.TextField('Aprašymas', max_length=1000)
     isbn = models.CharField('ISBN', max_length=13)
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
-    genre = models.ManyToManyField(Genre)
+    genre = models.ManyToManyField(Genre, blank=True)
 
     def __str__(self):
         return self.title
+
+    def display_genre(self):
+        res = ', '.join(elem.name for elem in self.genre.all())
+        return res
 
 
 class BookInstance(models.Model):
