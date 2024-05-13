@@ -8,7 +8,7 @@ class BookInstanceInline(admin.TabularInline):
 
 
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'isbn', 'author', 'display_genre')
+    list_display = ('title', 'isbn', 'author', 'display_genres')
     search_fields = ('title', 'author__last_name')  # <FK>__<tėvinės laukas>
     inlines = (BookInstanceInline,)
 
@@ -25,7 +25,11 @@ class BookInstanceAdmin(admin.ModelAdmin):
     )
 
 
-admin.site.register(Author)
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ('last_name', 'first_name', 'display_books')
+
+
+admin.site.register(Author, AuthorAdmin)
 admin.site.register(Book, BookAdmin)
 admin.site.register(Genre)
 admin.site.register(BookInstance, BookInstanceAdmin)

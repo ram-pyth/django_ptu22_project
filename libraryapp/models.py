@@ -15,6 +15,9 @@ class Author(models.Model):
         """Objekto vaizdavimas stringu"""
         return f'{self.last_name} {self.first_name}'
 
+    def display_books(self):  # book_set - relationsipas į Book, automatiškai sudaromas django
+        return ', '.join(elem.title for elem in self.book_set.all()[:3]) + ' ...'
+
 
 class Genre(models.Model):
     name = models.CharField("Žanrai", max_length=15, help_text='Įveskite knygos žanrą/us')
@@ -39,9 +42,8 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
-    def display_genre(self):
-        res = ', '.join(elem.name for elem in self.genre.all())
-        return res
+    def display_genres(self):
+        return ', '.join(elem.name for elem in self.genre.all())
 
 
 class BookInstance(models.Model):
