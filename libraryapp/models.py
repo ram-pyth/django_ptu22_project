@@ -7,6 +7,7 @@ class Author(models.Model):
     reprezentuojanti vieną autorių"""
     first_name = models.CharField('Vardas', max_length=100)
     last_name = models.CharField('Pavardė', max_length=100)
+    description = models.TextField('Aprašymas', max_length=2000, default="biografija...")
 
     class Meta:  # globalūs nuostatai lentelei(ordering - rikiavimas)
         ordering = ('last_name', 'first_name')
