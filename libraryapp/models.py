@@ -16,7 +16,7 @@ class Author(models.Model):
         """Objekto vaizdavimas stringu"""
         return f'{self.last_name} {self.first_name}'
 
-    def display_books(self):  # book_set - relationsipas į Book, automatiškai sudaromas django
+    def display_books(self):  # book_set - relationshipas į Book, automatiškai sudaromas django
         return ', '.join(elem.title for elem in self.book_set.all()[:3]) + ' ...'
 
 

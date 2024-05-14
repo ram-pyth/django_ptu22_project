@@ -3,5 +3,17 @@
 
 <h1>Autorius:</h1>
 <h4>{{ author_obj.first_name }} {{ author_obj.last_name }}</h4>
+<hr/>
 <p>{{ author_obj.description }}</p>
+<hr/>
+{% if author_obj.book_set.all %}
+    <h5>Turimos autoriaus knygos:</h5>
+    <ul>
+    {% for book_obj in author_obj.book_set.all %}
+        <li><strong>{{ book_obj.title }}</strong> , ISBN {{ book_obj.isbn }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Autoriaus knygų bibliotekoje nėra...</p>
+{% endif %}
 {% endblock %}
