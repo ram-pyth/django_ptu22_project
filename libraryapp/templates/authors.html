@@ -5,7 +5,8 @@
 <p>Mūsų turimų autorių sąrašas:</p>
 <ul>
     {% for author_obj in authors %}
-    <li>{{ author_obj.first_name }} {{ author_obj.last_name }}</li>
+    <li><a href="{% url 'author-one' author_obj.id %}">
+        {{ author_obj.first_name }} {{ author_obj.last_name }}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}
