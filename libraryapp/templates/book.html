@@ -12,7 +12,9 @@
     <p>Bus prieinama: {{ bookinst_o.due_back }}</p>
     <p>Nr: {{ bookinst_o.id }}</p>
     <p class="{% if bookinst_o.status == 'a' %} text-info
-              {% else %} text-danger
+              {% elif bookinst_o.status == 'g' %} text-success
+              {% elif bookinst_o.status == 'r' %} text-warning
+              {% elif bookinst_o.status == 'p' %} text-muted
               {% endif %}
     ">
         <b>{{ bookinst_o.get_status_display }}</b>
