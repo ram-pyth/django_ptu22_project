@@ -52,3 +52,12 @@ class BookDetailView(generic.DetailView):
     context_object_name = 'book'  # book - standartinis kintamojo template pavadinimas,sukuriamas django
     template_name = 'book.html'
 
+
+def search(request):
+    # žodynas su params - request.GET
+    query_text = request.GET['search_text']
+    search_results = Book.objects.filter(title__icontains=query_text)
+
+    context = {'book_list': search_results}
+    return render(request, 'search.html', context=context)
+
