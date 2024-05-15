@@ -20,7 +20,7 @@ MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
             {% block sidebar %}
             <ul class="sidebar-nav">
                 <li><a href="{% url 'index' %}">Pradžia</a></li>
-                <li><a href="" class="text-nowrap">Visos knygos</a></li>
+                <li><a href="{% url 'books-all' %}" class="text-nowrap">Visos knygos</a></li>
                 <li><a href="{% url 'authors-all' %}" class="text-nowrap">Visi autoriai</a></li> {# jinja komentaras #}
                 <li>
                     <form action="" method="get" class="form-group">
