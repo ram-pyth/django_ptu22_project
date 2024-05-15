@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h4> {{ book }}</h4>
-
-
+<h4> {{ book.title }}</h4>
+<p>Autorius: <a href="{% url 'author-one' book.author.id %}">{{ book.author }}</a></p>
+<p>Aprašymas: {{ book.summary }}</p>
+<p>Žanrai: {{ book.display_genres }} </p>
 {% endblock %}
