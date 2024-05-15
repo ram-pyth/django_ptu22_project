@@ -5,4 +5,15 @@
 <p class="bg-dark text-light">Autorius: <a href="{% url 'author-one' book.author.id %}">{{ book.author }}</a></p>
 <p><b>Aprašymas:</b> {{ book.summary }}</p>
 <p><b>Žanrai:</b> {{ book.display_genres }} </p>
+<hr/>
+<h5>Knygos egzemplioriai:</h5>
+{% for bookinst_o in book.bookinstance_set.all %}
+    <hr/>
+    <p>Bus prieinama: {{ bookinst_o.due_back }}</p>
+    <p>Nr: {{ bookinst_o.id }}</p>
+    <p class="text-danger">
+        <b>{{ bookinst_o.get_status_display }}</b>
+    </p>
+
+{% endfor %}
 {% endblock %}
