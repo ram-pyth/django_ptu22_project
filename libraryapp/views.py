@@ -46,3 +46,9 @@ class BookListView(generic.ListView):
     context_object_name = 'book_list'  # book_list - standartinis kintamojo template pavadinimas,sukuriamas django
     template_name = 'books.html'
 
+
+class BookDetailView(generic.DetailView):
+    model = Book
+    context_object_name = 'book'  # book - standartinis kintamojo template pavadinimas,sukuriamas django
+    template_name = 'book.html'
+
