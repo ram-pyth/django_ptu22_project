@@ -2,7 +2,7 @@
 {% block content %}
 
 <h4> {{ book.title }}</h4>
-<p>Autorius: <a href="{% url 'author-one' book.author.id %}">{{ book.author }}</a></p>
-<p>Aprašymas: {{ book.summary }}</p>
-<p>Žanrai: {{ book.display_genres }} </p>
+<p class="bg-dark text-light">Autorius: <a href="{% url 'author-one' book.author.id %}">{{ book.author }}</a></p>
+<p><b>Aprašymas:</b> {{ book.summary }}</p>
+<p><b>Žanrai:</b> {{ book.display_genres }} </p>
 {% endblock %}
