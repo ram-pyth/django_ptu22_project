@@ -55,9 +55,12 @@ class BookDetailView(generic.DetailView):
 
 def search(request):
     # žodynas su params - request.GET
+    # GET['search_text'] - tekstas iš paieškos laukelio
     query_text = request.GET['search_text']
+    # title - Book laukas, icontains - paieškos metodas
     search_results = Book.objects.filter(title__icontains=query_text)
 
-    context = {'book_list': search_results}
+    context = {'book_list': search_results,
+               'query_text': query_text}
     return render(request, 'search.html', context=context)
 
