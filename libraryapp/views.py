@@ -30,9 +30,9 @@ def index(request):
 def get_authors(request):
     # visos eilutės iš author lentelės
     authors = Author.objects.all()
-    paginator = Paginator(authors, 3)
-
-    paged_authors = paginator.get_page(1)  # porcijos nr
+    paginator = Paginator(authors, 2)
+    page_number = request.GET.get('page')
+    paged_authors = paginator.get_page(page_number)  # porcijos nr
 
     context = {
         'authors': paged_authors
