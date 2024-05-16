@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
+from django.db.models import Q
 from django.http import HttpResponse
 
 from .models import Author, Book, BookInstance, Genre
@@ -58,9 +59,12 @@ def search(request):
     # GET['search_text'] - tekstas iš paieškos laukelio
     query_text = request.GET['search_text']
     # title - Book laukas, icontains - paieškos metodas
-    search_results = Book.objects.filter(title__icontains=query_text)
+    search_results = Book.objects.filter(Q(title__icontains=query_text) |
+                                         Q(summary__icontains=query_text) |
+                                         # author - FK(Book į Author), last_name(Author)
+                                         Q(author__last_name__icontains=query_text)
+                                         )
 
     context = {'book_list': search_results,
                'query_text': query_text}
     return render(request, 'search.html', context=context)
-
