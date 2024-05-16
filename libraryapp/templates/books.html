@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 
 <h1>Turimos knygos</h1>
@@ -22,6 +23,11 @@
     <li><a href="{% url 'book-one' book_obj.id %}">{{ book_obj.title }}</a>
         , {{ book_obj.author }}
     </li>
+    {% if book_obj.cover %}
+        <img src="{{ book_obj.cover.url }}"/>
+    {% else %}
+        <img src="{% static 'img/no-image.png' %}"/>
+    {% endif %}
 {% endfor %}
 </ul>
 {% endblock %}
