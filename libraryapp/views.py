@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.db.models import Q
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 
 from .models import Author, Book, BookInstance, Genre
@@ -29,9 +30,12 @@ def index(request):
 def get_authors(request):
     # visos eilutės iš author lentelės
     authors = Author.objects.all()
+    paginator = Paginator(authors, 3)
+
+    paged_authors = paginator.get_page(1)  # porcijos nr
 
     context = {
-        'authors': authors
+        'authors': paged_authors
     }
     return render(request, 'authors.html', context=context)
 

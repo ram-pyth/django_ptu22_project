@@ -9,4 +9,15 @@
         {{ author_obj.first_name }} {{ author_obj.last_name }}</a></li>
     {% endfor %}
 </ul>
+{% if authors.has_other_pages %}
+<ul class="pagination">
+{% for nr in authors.paginator.page_range %}
+    {% if authors.page == nr %}
+        <li class="page-item active">{{ nr }}</li>
+    {% else %}
+        <li class="page-item">{{ nr }}</li>
+    {% endif %}
+{% endfor %}
+</ul>
+{% endif %}
 {% endblock %}
