@@ -18,18 +18,16 @@
         {% endif %}
     </span>
 </div>
-
-<div class="row">
+<ul>
 {% for book_obj in book_list %}
-    <div class="col-sm-6 col-md-3">
-        <div class="card">
-            {% if book_obj.cover %}
-                <img class="card-img-top" src="{{ book_obj.cover.url }}"/>
-            {% else %}
-                <img class="card-img-top" src="{% static 'img/no-image.png' %}"/>
-            {% endif %}
-        </div>
-    </div>
+    <li><a href="{% url 'book-one' book_obj.id %}">{{ book_obj.title }}</a>
+        , {{ book_obj.author }}
+    </li>
+    {% if book_obj.cover %}
+        <img src="{{ book_obj.cover.url }}"/>
+    {% else %}
+        <img src="{% static 'img/no-image.png' %}"/>
+    {% endif %}
 {% endfor %}
-</div>
+</ul>
 {% endblock %}
