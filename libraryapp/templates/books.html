@@ -21,13 +21,17 @@
 
 <div class="row">
 {% for book_obj in book_list %}
-    <div class="col-sm-6 col-md-3">
-        <div class="card">
+    <div class="col-sm-6 col-md-3 d-flex align-items-stretch">
+        <div class="card mb-4 shadow">
             {% if book_obj.cover %}
                 <img class="card-img-top" src="{{ book_obj.cover.url }}"/>
             {% else %}
                 <img class="card-img-top" src="{% static 'img/no-image.png' %}"/>
             {% endif %}
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">{{ book_obj.author }}</h6>
+                <p class="card-text"><a href="{% url 'book-one' book_obj.id %}">{{ book_obj.title }}</a></p>
+            </div>
         </div>
     </div>
 {% endfor %}

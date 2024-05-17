@@ -1,8 +1,14 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 
 <h4> {{ book.title }}</h4>
 <p class="bg-dark text-light">Autorius: <a href="{% url 'author-one' book.author.id %}">{{ book.author }}</a></p>
+{% if book.cover %}
+    <img src="{{ book.cover.url }}"/>
+{% else %}
+    <img src="{% static 'img/no-image.png' %}"/>
+{% endif %}
 <p><b>Aprašymas:</b> {{ book.summary }}</p>
 <p><b>Žanrai:</b> {{ book.display_genres }} </p>
 <hr/>
