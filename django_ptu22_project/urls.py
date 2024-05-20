@@ -25,4 +25,6 @@ urlpatterns = [
     path('library/', include('libraryapp.urls')),
     path('', RedirectView.as_view(url='library/', permanent=True)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
-  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
+  + [path('accounts/', include('django.contrib.auth.urls'))]
+

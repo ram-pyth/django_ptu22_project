@@ -18,10 +18,15 @@ def index(request):
     # suskaičiuojam laisvus egzempliorius status == g
     num_instances_available = BookInstance.objects.filter(status__exact='g').count()
 
+    # skaitliukas anoniminiams vartotojams
+    num_visits = request.session.get('num_visits', 1)
+    request.session['num_visits'] = num_visits + 1
+
     context_my = {'num_authors_t': num_authors,
                   'num_books_t': num_books,
                   'num_bookinstances_t': num_bookinstances,
-                  'num_instances_available_t': num_instances_available
+                  'num_instances_available_t': num_instances_available,
+                  'num_visits_t': num_visits
                   }
 
     return render(request, 'index.html', context=context_my)
@@ -50,7 +55,7 @@ class BookListView(generic.ListView):
     model = Book
     context_object_name = 'book_list'  # book_list - standartinis kintamojo template pavadinimas,sukuriamas django
     template_name = 'books.html'
-    paginate_by = 4
+    paginate_by = 6
 
 
 class BookDetailView(generic.DetailView):
