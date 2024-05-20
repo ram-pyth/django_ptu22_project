@@ -127,3 +127,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = Path(BASE_DIR, 'libraryapp/media')
 
 MEDIA_URL = '/media/'
+
+LOGIN_REDIRECT_URL = '/'
+
+# email settingai
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
