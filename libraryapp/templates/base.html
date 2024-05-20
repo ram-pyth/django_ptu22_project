@@ -62,6 +62,20 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
+
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+               <a class="nav-link">{{ user }}</a>
+            </li>
+            <li class="nav-item">
+               <a href="{% url 'logout' %}" class="nav-link">Atsijungti</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+               <a href="{% url 'login' %}" class="nav-link">Prisijungti</a>
+            </li>
+            {% endif %}
+
             <li class="nav-item">
               <a class="nav-link" href="{% url 'index' %}">Pradžia</a>
             </li>
