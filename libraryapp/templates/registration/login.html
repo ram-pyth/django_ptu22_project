@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<p> Čia bus logino pslp </p>
-</body>
-</html>
+
+
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>Vartotojas</td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>Slaptažodis</td>
+            <td>{{ form.password }}</td>
+        </tr>
+    </table>
+    <input type="submit" value="Prisijungti"/>
+
+</form>
