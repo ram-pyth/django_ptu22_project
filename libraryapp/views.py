@@ -86,3 +86,6 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     template_name = 'user_books.html'
     context_object_name = 'bookinstance_list'
 
+    def get_queryset(self):
+        return BookInstance.objects.filter(reader=self.request.user).filter(status='p').all()
+

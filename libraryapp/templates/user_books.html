@@ -2,6 +2,17 @@
 {% block content %}
 
 <h1>Mano paimtos knygos</h1>
-{{ user }}
+{% if bookinstance_list %}
+<ul>
+    {% for bookinst_o in bookinstance_list %}
+    <li>
 
+    {{ bookinst_o.id }} {{ bookinst_o.book }}
+        {{ bookinst_o.status }} {{ bookinst_o.reader }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Šiuo metu jūs neturit paėmęs knygų</p>
+{% endif %}
 {% endblock %}
