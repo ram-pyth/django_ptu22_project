@@ -75,5 +75,12 @@ class BookInstance(models.Model):
         help_text='Knygos kopijos statusas'
     )
 
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+        else:
+            return False
+
     def __str__(self):
         return f'{self.id} {self.status} {self.due_back} {self.book} {self.book.author}'

@@ -8,7 +8,13 @@
     <li>
 
     {{ bookinst_o.id }} {{ bookinst_o.book }}
-        {{ bookinst_o.status }} {{ bookinst_o.reader }}
+        {{ bookinst_o.due_back }}
+
+    {% if bookinst_o.is_overdue %}
+        PRADELSTA
+    {% else %}
+        OK
+    {% endif %}
     </li>
     {% endfor %}
 </ul>
