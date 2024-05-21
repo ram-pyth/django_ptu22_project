@@ -4,7 +4,7 @@
 <h1>Autorius:</h1>
 <h4>{{ author_obj.first_name }} {{ author_obj.last_name }}</h4>
 <hr/>
-<p>{{ author_obj.description }}</p>
+<p>{{ author_obj.description | safe}}</p>
 <hr/>
 {% if author_obj.book_set.all %}
     <h5>Turimos autoriaus knygos:</h5>

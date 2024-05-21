@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from tinymce.models import HTMLField
 from datetime import date
 import uuid
 import PIL
@@ -11,7 +12,8 @@ class Author(models.Model):
     reprezentuojanti vieną autorių"""
     first_name = models.CharField('Vardas', max_length=100)
     last_name = models.CharField('Pavardė', max_length=100)
-    description = models.TextField('Aprašymas', max_length=2000, default="biografija...")
+    # description = models.TextField('Aprašymas', max_length=2000, default="biografija...")
+    description = HTMLField()
 
     class Meta:  # globalūs nuostatai lentelei(ordering - rikiavimas)
         ordering = ('last_name', 'first_name')
