@@ -82,6 +82,9 @@
             <li class="nav-item">
                <a href="{% url 'logout' %}" class="nav-link">Atsijungti</a>
             </li>
+            <li class="nav-item">
+               <a href="{% url 'my-borrowed' %}" class="nav-link">Mano knygos</a>
+            </li>
             {% else %}
             <li class="nav-item">
                <a href="{% url 'login' %}?next={{ request.path }}" class="nav-link">Prisijungti</a>
