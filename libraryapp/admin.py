@@ -14,14 +14,14 @@ class BookAdmin(admin.ModelAdmin):
 
 
 class BookInstanceAdmin(admin.ModelAdmin):
-    list_display = ('book', 'id', 'status', 'due_back')
+    list_display = ('book', 'id', 'reader', 'status', 'due_back')
     list_filter = ('status', 'due_back')
     search_fields = ('id', 'book__title')
-    list_editable = ('status', 'due_back')
+    list_editable = ('status', 'due_back', 'reader')
 
     fieldsets = (
         ('Knyga', {'fields': ['book']}),
-        ('Prieinamumas', {'fields': ['status', 'due_back']})
+        ('Prieinamumas', {'fields': ['reader', 'status', 'due_back']})
     )
 
 

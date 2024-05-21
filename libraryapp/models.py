@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+from datetime import date
 import uuid
 import PIL
 
@@ -53,6 +56,7 @@ class BookInstance(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     due_back = models.DateField('Bus prieinama', null=True, blank=True)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    reader = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     # statusų rinkinys(ne db stulpelis)
     LOAN_STATUS = (
