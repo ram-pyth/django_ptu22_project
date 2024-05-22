@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponse
 
 from .models import Author, Book, BookInstance, Genre
+from .forms import BookReviewForm
 
 
 def index(request):
@@ -62,10 +63,11 @@ class BookListView(generic.ListView):
     paginate_by = 6
 
 
-class BookDetailView(generic.DetailView):
+class BookDetailView(generic.edit.FormMixin, generic.DetailView):
     model = Book
     context_object_name = 'book'  # book - standartinis kintamojo template pavadinimas,sukuriamas django
     template_name = 'book.html'
+    form_class = BookReviewForm
 
 
 def search(request):
@@ -124,3 +126,5 @@ def register_user(request):
         User.objects.create_user(username=username, email=email, password=password)
         messages.info(request, f'Vartotojas vardu {username} sukurtas!!!')
         return redirect('login')
+
+
