@@ -87,6 +87,9 @@
             </li>
             {% else %}
             <li class="nav-item">
+               <a href="{% url 'register-url' %}" class="nav-link">Registruotis</a>
+            </li>
+            <li class="nav-item">
                <a href="{% url 'login' %}?next={{ request.path }}" class="nav-link">Prisijungti</a>
             </li>
             {% endif %}

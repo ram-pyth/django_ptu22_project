@@ -89,3 +89,7 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return BookInstance.objects.filter(reader=self.request.user).filter(status='p').order_by('due_back')
 
+
+def register_user(request):
+    if request.method == 'GET':
+        return render(request, 'registration/registration.html')
