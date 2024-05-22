@@ -16,8 +16,8 @@
 {% if book.bookreview_set.all %}
     {% for review in book.bookreview_set.all %}
         <hr/>
-        <small>{{ review.reviewer }} {{ review.date_created }}</small>
-        <p>{{ review.content }}</p>
+<small><b>{{ review.reviewer }}</b> <em>{{ review.date_created }}</em></small>
+        <p class="bg-light">{{ review.content }}</p>
     {% endfor %}
 {% else %}
     <p>Knyga komentarų neturi...</p>
