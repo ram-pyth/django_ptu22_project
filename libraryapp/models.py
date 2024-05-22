@@ -86,3 +86,14 @@ class BookInstance(models.Model):
 
     def __str__(self):
         return f'{self.id} {self.status} {self.due_back} {self.book} {self.book.author}'
+
+
+class BookReview(models.Model):
+    date_created = models.DateTimeField(auto_now_add=True)
+    content = models.TextField('Atsiliepimas', max_length=2000)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE,
+                             blank=True)  # blank True, nes formoje nerodysim pasirinkimo knygos
+    reviewer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.date_created}, {self.reviewer}, {self.book}, {self.content[:50]}'
