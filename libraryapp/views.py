@@ -1,8 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponse
 
 from .models import Author, Book, BookInstance, Genre
@@ -93,3 +96,14 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
 def register_user(request):
     if request.method == 'GET':
         return render(request, 'registration/registration.html')
+    elif request.method == 'POST':
+        # paimam duomenis iš formos
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+
+        if password != password2:
+            messages.warning(request, 'Slaptažodžiai nesutampa!!!')
+
+        return redirect('register-url')
