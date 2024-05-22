@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views import generic
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -68,6 +68,26 @@ class BookDetailView(generic.edit.FormMixin, generic.DetailView):
     context_object_name = 'book'  # book - standartinis kintamojo template pavadinimas,sukuriamas django
     template_name = 'book.html'
     form_class = BookReviewForm
+
+    # post iš formos
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()  # self.object - Book objektas
+        form = self.get_form()  # form - BookReviewForm objektas
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    # formos custom validacija(jos metu įrašom komentarui knygą ir userį
+    def form_valid(self, form):
+        form.instance.book = self.object # BookReview(form.instance.book) pririšam prie Book(self.object)
+        form.instance.reviewer = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    # nurodom kur patenkam PO posto
+    def get_success_url(self):
+        return reverse('book-one', kwargs={'pk': self.object.id})
 
 
 def search(request):

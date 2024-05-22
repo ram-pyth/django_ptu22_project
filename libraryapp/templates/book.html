@@ -12,6 +12,7 @@
 <p><b>Aprašymas:</b> {{ book.summary }}</p>
 <p><b>Žanrai:</b> {{ book.display_genres }} </p>
 <hr/>
+{% if user.is_authenticated %}
 <div>
     <h5>Palikite atsiliepimą apie knygą</h5>
     <form method="post">
@@ -22,6 +23,7 @@
         </div>
     </form>
 </div>
+{% endif %}
 <h5>Komentarai:</h5>
 {% if book.bookreview_set.all %}
     {% for review in book.bookreview_set.all %}
