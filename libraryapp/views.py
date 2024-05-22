@@ -93,6 +93,7 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
         return BookInstance.objects.filter(reader=self.request.user).filter(status='p').order_by('due_back')
 
 
+@csrf_protect
 def register_user(request):
     if request.method == 'GET':
         return render(request, 'registration/registration.html')
@@ -106,4 +107,20 @@ def register_user(request):
         if password != password2:
             messages.warning(request, 'Slaptažodžiai nesutampa!!!')
 
-        return redirect('register-url')
+        if User.objects.filter(username=username).exists():
+            messages.warning(request, f'Vart. vardas {username} užimtas!!!!')
+
+        if not email:
+            messages.warning(request, 'Email neįvestas')
+
+        if User.objects.filter(email=email).exists():
+            messages.warning(request, f'Emailas {email} jau registruotas!!!')
+
+        # jeigu yra nors viena žinutė messages(reiškia negalim registruoti userio)
+        if messages.get_messages(request):
+            return redirect('register-url')
+
+        # jeigu nebuvo klaidų įvestoje info ir mes galim registruoti naują userį
+        User.objects.create_user(username=username, email=email, password=password)
+        messages.info(request, f'Vartotojas vardu {username} sukurtas!!!')
+        return redirect('login')
