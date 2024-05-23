@@ -151,9 +151,19 @@ def register_user(request):
 
 @login_required
 def profilis(request):
-    if request.method == 'GET':
-        p_form = ProfileUpdateForm(instance=request.user.profile)
-        u_form = UserUpdateForm(instance=request.user)
+    if request.method == 'POST':
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        if p_form.is_valid() and u_form.is_valid():
+            p_form.save()
+            u_form.save()
+            messages.info(request, "Profilis atnaujintas")
+        else:
+            messages.warning(request, "Profilis neatnaujintas")
+        return redirect('profilis-url')
+
+    p_form = ProfileUpdateForm(instance=request.user.profile)
+    u_form = UserUpdateForm(instance=request.user)
 
     context = {
         'p_form': p_form,

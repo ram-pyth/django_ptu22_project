@@ -2,6 +2,7 @@
 {% block content %}
 
 <h1>Mano paimtos knygos</h1>
+<img class="rounded-circle" src="{{ user.profile.picture.url }}" width="50px" height="50px" />
 {% if bookinstance_list %}
 <ul>
     {% for bookinst_o in bookinstance_list %}
