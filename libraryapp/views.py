@@ -6,9 +6,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
-from .models import Author, Book, BookInstance, Genre
+from .models import Author, Book, BookInstance, Genre, Profile
 from .forms import BookReviewForm
 
 
@@ -71,7 +72,7 @@ class BookDetailView(generic.edit.FormMixin, generic.DetailView):
 
     # post iš formos
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()  # self.object - Book objektas
+        self.book_object = self.get_object()  # self.object - Book objektas
         form = self.get_form()  # form - BookReviewForm objektas
         if form.is_valid():
             return self.form_valid(form)
@@ -80,14 +81,14 @@ class BookDetailView(generic.edit.FormMixin, generic.DetailView):
 
     # formos custom validacija(jos metu įrašom komentarui knygą ir userį
     def form_valid(self, form):
-        form.instance.book = self.object # BookReview(form.instance.book) pririšam prie Book(self.object)
+        form.instance.book = self.book_object # BookReview(form.instance.book) pririšam prie Book(self.object)
         form.instance.reviewer = self.request.user
         form.save()
         return super().form_valid(form)
 
     # nurodom kur patenkam PO posto
     def get_success_url(self):
-        return reverse('book-one', kwargs={'pk': self.object.id})
+        return reverse('book-one', kwargs={'pk': self.book_object.id})
 
 
 def search(request):
@@ -146,5 +147,10 @@ def register_user(request):
         User.objects.create_user(username=username, email=email, password=password)
         messages.info(request, f'Vartotojas vardu {username} sukurtas!!!')
         return redirect('login')
+
+
+@login_required
+def profilis(request):
+    return render(request, 'profilis.html')
 
 
