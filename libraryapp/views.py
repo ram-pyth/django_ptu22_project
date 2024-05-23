@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 from .models import Author, Book, BookInstance, Genre, Profile
-from .forms import BookReviewForm
+from .forms import BookReviewForm, ProfileUpdateForm, UserUpdateForm
 
 
 def index(request):
@@ -151,6 +151,15 @@ def register_user(request):
 
 @login_required
 def profilis(request):
-    return render(request, 'profilis.html')
+    if request.method == 'GET':
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+        u_form = UserUpdateForm(instance=request.user)
+
+    context = {
+        'p_form': p_form,
+        'u_form': u_form
+    }
+
+    return render(request, 'profilis.html', context=context)
 
 
