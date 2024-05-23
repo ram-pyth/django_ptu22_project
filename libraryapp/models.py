@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from tinymce.models import HTMLField
 from datetime import date
 import uuid
-import PIL
+from PIL import Image
 
 
 class Author(models.Model):
@@ -100,8 +100,15 @@ class BookReview(models.Model):
 
 
 class Profile(models.Model):
-    picture = models.ImageField(upload_to='profile_pics', blank=True)
+    picture = models.ImageField(upload_to='profile_pics', default='default-user.png')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.user.username} profilis'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # numatytieji Model klasės veiksmai suvykdomi
+        img = Image.open(self.picture.path)
+        thumb_size = (200, 200)
+        img.thumbnail(thumb_size)
+        img.save(self.picture.path)
