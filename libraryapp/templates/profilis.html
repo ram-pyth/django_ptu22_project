@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
 
 <div>
@@ -10,8 +11,8 @@
     </div>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ u_form }}
-        {{ p_form }}
+        {{ u_form | crispy }}
+        {{ p_form | crispy }}
         <div>
             <button class="btn btn-outline-info" type="submit">Atnaujinti</button>
         </div>
