@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <form method="post">
+        {% csrf_token %}
+        <fieldset class="form-group"><legend class="border-bottom mb-4">Ar tikrai norite ištrinti knygą {{ bookinstance.book }}</legend>
+        <p>Kopijos id: {{ bookinstance.id }}</p>
+        <p>Autorius: {{ bookinstance.book.author }}</p>
+        <p> Grąžinimo data: {{ bookinstance.due_back }}</p>
+        <p> Statusas: {{ bookinstance.get_status_display }}</p>
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">TAIP</button>
+            <a class="btn btn-outline-secondary" href="{% url 'my-borrowed' %}">Atšaukti</a>
+        </div>
+    </form>
+
+{% endblock %}
