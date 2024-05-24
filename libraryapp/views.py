@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 from .models import Author, Book, BookInstance, Genre, Profile
-from .forms import BookReviewForm, ProfileUpdateForm, UserUpdateForm
+from .forms import BookReviewForm, ProfileUpdateForm, UserUpdateForm, UserBookInstanceCreateForm
 
 
 def index(request):
@@ -72,7 +72,7 @@ class BookDetailView(generic.edit.FormMixin, generic.DetailView):
 
     # post iš formos
     def post(self, request, *args, **kwargs):
-        self.book_object = self.get_object()  # self.object - Book objektas
+        self.object = self.get_object()  # self.object - Book objektas
         form = self.get_form()  # form - BookReviewForm objektas
         if form.is_valid():
             return self.form_valid(form)
@@ -81,14 +81,14 @@ class BookDetailView(generic.edit.FormMixin, generic.DetailView):
 
     # formos custom validacija(jos metu įrašom komentarui knygą ir userį
     def form_valid(self, form):
-        form.instance.book = self.book_object # BookReview(form.instance.book) pririšam prie Book(self.object)
+        form.instance.book = self.object # BookReview(form.instance.book) pririšam prie Book(self.object)
         form.instance.reviewer = self.request.user
         form.save()
         return super().form_valid(form)
 
     # nurodom kur patenkam PO posto
     def get_success_url(self):
-        return reverse('book-one', kwargs={'pk': self.book_object.id})
+        return reverse('book-one', kwargs={'pk': self.object.id})
 
 
 def search(request):
@@ -171,5 +171,23 @@ def profilis(request):
     }
 
     return render(request, 'profilis.html', context=context)
+
+
+class BookInstanceByUserCreateView(LoginRequiredMixin, generic.CreateView):
+    model = BookInstance
+    form_class = UserBookInstanceCreateForm
+    template_name = 'user_book_form.html'
+    success_url = '/library/mybooks'
+
+    def form_valid(self, form):
+        form.instance.reader = self.request.user
+        form.instance.status = 'p'
+        return super().form_valid(form)
+
+
+
+
+
+
 
 
