@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views import generic
 from django.db.models import Q
 from django.core.paginator import Paginator
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect
@@ -183,6 +183,24 @@ class BookInstanceByUserCreateView(LoginRequiredMixin, generic.CreateView):
         form.instance.reader = self.request.user
         form.instance.status = 'p'
         return super().form_valid(form)
+
+
+class BookInstanceByUserUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    model = BookInstance
+    form_class = UserBookInstanceCreateForm
+    # fields = ('due_back',) alternatyyva  form_class
+    template_name = 'user_book_form.html'
+    success_url = '/library/mybooks'
+
+    def form_valid(self, form):
+        form.instance.reader = self.request.user
+        form.instance.status = 'p'
+        return super().form_valid(form)
+
+    def test_func(self):  # UserPassesTestMixin dalis, patys nustatom sąlygą ar leidžiam updeitinti
+        bookinstance_object = self.get_object()
+        return bookinstance_object.reader == self.request.user
+
 
 
 

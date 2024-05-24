@@ -15,6 +15,9 @@
     </a>
         <br>
         {{ bookinst_o.due_back }}
+    <div>
+        <a class="btn-secondary btn-sm" href="{% url 'my-borrowed-update' bookinst_o.id %}">Redaguoti</a>
+    </div>
     </li>
     {% endfor %}
 </ul>
