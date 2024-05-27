@@ -48,11 +48,13 @@
     ">
         <b>{{ bookinst_o.get_status_display }}</b>
     </p>
-
+{% for group in user.groups.all %}
+    {% if 'moderatoriai' == group.name %}
     <div>
         <a class="btn-sm btn-danger" href="{% url 'moderator-book-delete' bookinst_o.id %}">Trinti</a>
     </div>
-
+    {% endif %}
+{% endfor %}
 
 {% endfor %}
 {% endblock %}

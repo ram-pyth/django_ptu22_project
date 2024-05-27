@@ -222,5 +222,5 @@ class BookInstanceModeratorDeleteView(LoginRequiredMixin, UserPassesTestMixin, g
         return reverse('book-one',
                        kwargs={'pk': self.object.book.id})  # self.object - bookinstance objektas, book - FK į Book
 
-    def test_func(self):
-        return True
+    def test_func(self):  # ar useris priklauso grupei moderatoriai
+        return self.request.user.groups.filter(name='moderatoriai').exists()

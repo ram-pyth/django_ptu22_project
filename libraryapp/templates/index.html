@@ -8,5 +8,12 @@
 <p>Laisvų yra {{ num_instances_available_t }} egz.</p>
 <p>{{ request.user }}</p>
 <p>Apsilankymų skaičius: {{ num_visits_t }}</p>
+<p>Vartotojo grupės {{ user.groups.all }}</p>
+
+{% for group in user.groups.all %}
+    {% if 'moderatoriai' == group.name %}
+        <p>Vartotojas priklauso moderatoriams</p>
+    {% endif %}
+{% endfor %}
 
 {% endblock %}
