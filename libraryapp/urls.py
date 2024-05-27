@@ -15,4 +15,7 @@ urlpatterns = [
     path('mybooks/update/<uuid:pk>', views.BookInstanceByUserUpdateView.as_view(), name='my-borrowed-update'),
     path('mybooks/delete/<uuid:pk>', views.BookInstanceByUserDeleteView.as_view(), name='my-borrowed-delete'),
 
+    path('books/moderator-delete/<uuid:pk>', views.BookInstanceModeratorDeleteView.as_view(),
+         name='moderator-book-delete'),
+
 ]

@@ -81,7 +81,7 @@ class BookDetailView(generic.edit.FormMixin, generic.DetailView):
 
     # formos custom validacija(jos metu įrašom komentarui knygą ir userį
     def form_valid(self, form):
-        form.instance.book = self.object # BookReview(form.instance.book) pririšam prie Book(self.object)
+        form.instance.book = self.object  # BookReview(form.instance.book) pririšam prie Book(self.object)
         form.instance.reviewer = self.request.user
         form.save()
         return super().form_valid(form)
@@ -206,6 +206,7 @@ class BookInstanceByUserDeleteView(LoginRequiredMixin, UserPassesTestMixin, gene
     model = BookInstance
     template_name = 'user_book_delete.html'
     success_url = '/library/mybooks'
+
     # context_object_name = 'bookinstance'
 
     def test_func(self):  # UserPassesTestMixin dalis, patys nustatom sąlygą ar leidžiam updeitinti
@@ -213,10 +214,13 @@ class BookInstanceByUserDeleteView(LoginRequiredMixin, UserPassesTestMixin, gene
         return bookinstance_object.reader == self.request.user
 
 
+class BookInstanceModeratorDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    model = BookInstance
+    template_name = 'moderator_book_delete.html'
 
+    def get_success_url(self):
+        return reverse('book-one',
+                       kwargs={'pk': self.object.book.id})  # self.object - bookinstance objektas, book - FK į Book
 
-
-
-
-
-
+    def test_func(self):
+        return True

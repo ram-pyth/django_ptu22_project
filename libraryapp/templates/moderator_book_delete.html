@@ -8,10 +8,11 @@
         <p>Autorius: {{ bookinstance.book.author }}</p>
         <p> Grąžinimo data: {{ bookinstance.due_back }}</p>
         <p> Statusas: {{ bookinstance.get_status_display }}</p>
+        <p> Skaitytojas: {{ bookinstance.reader.username }}</p>
         </fieldset>
         <div class="form-group">
             <button class="btn btn-outline-info" type="submit">TAIP</button>
-            <a  class="btn btn-outline-secondary" href="{% url 'my-borrowed' %}">Atšaukti</a>
+            <a  class="btn btn-outline-secondary" href="{% url 'book-one' bookinstance.book.id %}">Atšaukti</a>
         </div>
     </form>
 
