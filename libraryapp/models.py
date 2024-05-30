@@ -108,7 +108,22 @@ class Profile(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)  # numatytieji Model klasės veiksmai suvykdomi
-        img = Image.open(self.picture.path)
-        thumb_size = (200, 200)
-        img.thumbnail(thumb_size)
-        img.save(self.picture.path)
+        # img = Image.open(self.picture.path)
+        # thumb_size = (200, 200)
+        # img.thumbnail(thumb_size)
+        # img.save(self.picture.path)
+
+        import seaborn as sns
+        import matplotlib.pyplot as plt
+
+        data = {'books': Book.objects.count(), 'bookinstances': BookInstance.objects.count(), 'authors': Author.objects.count()}
+
+        categories = list(data.keys())
+        counts = list(data.values())
+
+        sns.barplot(x=categories, y=counts)
+
+        plt.title('Library Data')
+        plt.xlabel('Category')
+        plt.ylabel('Count')
+        plt.savefig(self.picture.path)
